@@ -3,7 +3,7 @@ from flask_bootstrap import Bootstrap
 from flask_moment import Moment
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
-from wtforms.validators import DataRequired, ValidationError
+from wtforms.validators import DataRequired, ValidationError, Email
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'hard to guess string'
@@ -18,7 +18,7 @@ def email_validator(form, field):
 
 class NameForm(FlaskForm):
     name = StringField('What is your name?', validators=[DataRequired()])
-    email = StringField('What is your email?', validators=[DataRequired(), email_validator])
+    email = StringField('What is your email?', validators=[DataRequired(), Email(), email_validator])
     submit = SubmitField('Submit')
 
 
