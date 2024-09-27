@@ -1,3 +1,20 @@
-# this requirements file is used by Heroku
-# requirements for other configurations are located in the requirements subdirectory
--r requirements/heroku.txt
+Flask
+Flask-Bootstrap
+Flask-HTTPAuth
+Flask-Login
+Flask-Mail
+Flask-Migrate
+Flask-Moment
+Flask-PageDown
+Flask-SQLAlchemy
+Flask-WTF
+html5lib
+Mako
+python-dateutil
+python-dotenv
+python-editor
+six
+SQLAlchemy
+visitor
+webencodings
+WTForms

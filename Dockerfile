@@ -1,21 +1,28 @@
-FROM python:3.6-alpine
+FROM ubuntu:latest
 
-ENV FLASK_APP flasky.py
-ENV FLASK_CONFIG production
+# Update and install dependencies
+RUN apt-get update -y && \
+    apt-get install -y python3 python3-pip python3-dev build-essential python3-venv && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN adduser -D flasky
-USER flasky
+# Set the working directory inside the container
+WORKDIR /app
 
-WORKDIR /home/flasky
+# Copy the application code
+COPY . /app
 
-COPY requirements requirements
-RUN python -m venv venv
-RUN venv/bin/pip install -r requirements/docker.txt
+# Create a virtual environment and activate it
+RUN python3 -m venv venv
 
-COPY app app
-COPY migrations migrations
-COPY flasky.py config.py boot.sh ./
+# Install Python dependencies within the virtual environment
+RUN ./venv/bin/pip install --no-cache-dir -r requirements.txt
 
-# run-time configuration
-EXPOSE 5000
-ENTRYPOINT ["./boot.sh"]
+# Ensure the virtual environment is activated when the container runs
+ENV PATH="/app/venv/bin:$PATH"
+
+# Set the FLASK_APP environment variable
+ENV FLASK_APP="hello.py"
+
+# Set the entry point to use Python3
+# ENTRYPOINT ["python3"]
+CMD ["flask", "run", "-h", "0.0.0.0"]
